@@ -4,26 +4,26 @@
 
 **Lớp:** KSKTVT
 
-**Đề tài:** Thiết kế Mạch phát hiện té ngã bằng phép đo gia tốc đột ngột và thay đổi góc nghiêng, tích hợp IoT Dashboard[cite: 1].
+**Đề tài:** Thiết kế Mạch phát hiện té ngã bằng phép đo gia tốc đột ngột và thay đổi góc nghiêng, tích hợp IoT Dashboard.
 
 ---
 
 ## 1. Giới thiệu bài toán
-Hệ thống được thiết kế nhằm giám sát và cảnh báo sự cố té ngã cho người dùng (đặc biệt là người cao tuổi hoặc người bệnh)[cite: 1]. Sử dụng vi điều khiển **ESP32** kết hợp cảm biến gia tốc và con quay hồi chuyển **MPU6050** để thu thập dữ liệu chuyển động theo thời gian thực[cite: 1]. 
-* Khi phát hiện có va chạm mạnh kết hợp thay đổi góc nghiêng bất thường, hệ thống sẽ kích hoạt còi báo động và đèn LED tại chỗ[cite: 1], đồng thời truyền dữ liệu qua giao thức **MQTT** lên Web Dashboard để hiển thị biểu đồ và hỗ trợ điều khiển từ xa[cite: 1].
-* Ứng dụng hệ điều hành thời gian thực **FreeRTOS** để phân chia các tác vụ (Task) chạy đa nhiệm trên hai nhân (Core 0 & Core 1) của ESP32 nhằm đảm bảo độ trễ thấp và tính ổn định cao[cite: 1].
+Hệ thống được thiết kế nhằm giám sát và cảnh báo sự cố té ngã cho người dùng (đặc biệt là người cao tuổi hoặc người bệnh). Sử dụng vi điều khiển **ESP32** kết hợp cảm biến gia tốc và con quay hồi chuyển **MPU6050** để thu thập dữ liệu chuyển động theo thời gian thực. 
+* Khi phát hiện có va chạm mạnh kết hợp thay đổi góc nghiêng bất thường, hệ thống sẽ kích hoạt còi báo động và đèn LED tại chỗ, đồng thời truyền dữ liệu qua giao thức **MQTT** lên Web Dashboard để hiển thị biểu đồ và hỗ trợ điều khiển từ xa.
+* Ứng dụng hệ điều hành thời gian thực **FreeRTOS** để phân chia các tác vụ (Task) chạy đa nhiệm trên hai nhân (Core 0 & Core 1) của ESP32 nhằm đảm bảo độ trễ thấp và tính ổn định cao.
 
 ---
 
 ## 2. Công nghệ sử dụng
 * **Phần cứng vi điều khiển:** ESP32 NodeMCU / DevKit V1.
-* **Cảm biến:** MPU6050 (6 trục: Gia tốc kế và Con quay hồi chuyển)[cite: 1].
-* **Cơ cấu chấp hành:** Đèn LED cảnh báo (qua điện trở 220Ω), Còi Buzzer[cite: 1].
-* **Hệ điều hành nhúng:** FreeRTOS (Đa nhiệm, quản lý Queue, phân chia Core 0 và Core 1)[cite: 1].
+* **Cảm biến:** MPU6050 (6 trục: Gia tốc kế và Con quay hồi chuyển).
+* **Cơ cấu chấp hành:** Đèn LED cảnh báo (qua điện trở 220Ω), Còi Buzzer.
+* **Hệ điều hành nhúng:** FreeRTOS (Đa nhiệm, quản lý Queue, phân chia Core 0 và Core 1).
 * **Giao thức truyền thông & IoT:** 
-  * Wi-Fi (Kết nối mạng không dây)[cite: 1].
-  * MQTT Protocol (PubSubClient qua Broker `broker.emqx.io`)[cite: 1].
-* **Giao diện Web Dashboard:** HTML5, CSS, JavaScript kết hợp thư viện **Chart.js** (vẽ biểu đồ thời gian thực) và **MQTT.js** (giao tiếp WebSocket)[cite: 1].
+  * Wi-Fi (Kết nối mạng không dây).
+  * MQTT Protocol (PubSubClient qua Broker `broker.emqx.io`).
+* **Giao diện Web Dashboard:** HTML5, CSS, JavaScript kết hợp thư viện **Chart.js** (vẽ biểu đồ thời gian thực) và **MQTT.js** (giao tiếp WebSocket).
 * **Môi trường mô phỏng:** Wokwi Simulator.
 
 ---
@@ -46,8 +46,8 @@ Hệ thống được thiết kế nhằm giám sát và cảnh báo sự cố t
 ## 4. Chức năng hệ thống
 
 * **Phát hiện té ngã tự động (Auto Mode):** 
-  * Đọc liên tục giá trị gia tốc tổng ($a_{acc}$) và góc nghiêng (Roll, Pitch) từ cảm biến MPU6050[cite: 1].
-  * Thuật toán nhận diện khi gia tốc vượt ngưỡng va chạm kết hợp góc nghiêng lệch quá giới hạn trong khoảng thời gian cho phép[cite: 1].
+  * Đọc liên tục giá trị gia tốc tổng ($a_{acc}$) và góc nghiêng (Roll, Pitch) từ cảm biến MPU6050.
+  * Thuật toán nhận diện khi gia tốc vượt ngưỡng va chạm kết hợp góc nghiêng lệch quá giới hạn trong khoảng thời gian cho phép.
 * **Cảnh báo tại chỗ:** 
   * Tự động bật sáng đèn LED và hú còi Buzzer khi xảy ra sự cố té ngã[cite: 1].
 * **Truyền thông dữ liệu IoT (MQTT):** 
