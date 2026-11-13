@@ -63,3 +63,4 @@ Hệ thống được thiết kế nhằm giám sát và cảnh báo sự cố t
 * **`TaskReadData` (Core 1 - Ưu tiên 2):** Đọc dữ liệu từ MPU6050, tính toán gia tốc tổng, góc Roll/Pitch, chạy thuật toán phát hiện té ngã và đưa dữ liệu vào hàng đợi (`Queue`).
 * **`TaskAlert` (Core 1 - Ưu tiên 2):** Xử lý sự kiện cảnh báo từ Queue để điều khiển trạng thái bật/tắt của LED (GPIO 12) và Buzzer (GPIO 14) theo chế độ tự động hoặc thủ công.
 * **`TaskTransmitData` (Core 0 - Ưu tiên 1):** Quản lý kết nối Wi-Fi, duy trì vòng lặp kết nối MQTT Broker, publish dữ liệu telemetry và subscribe nhận lệnh điều khiển từ Web.
+**Link Wokwi** https://wokwi.com/projects/480580185911141377
