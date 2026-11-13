@@ -7,13 +7,13 @@
 #include <math.h>
 
 // =====================================================
-// 1. KHAI BÁO CHÂN GPIO (Đồng bộ với mạch Wokwi của bạn)
+// 1. KHAI BÁO CHÂN GPIO
 // =====================================================
 #define SDA_PIN       21
 #define SCL_PIN       22
 
-#define LED_PIN       12   // Khớp với sơ đồ LED nối GPIO 12
-#define BUZZER_PIN    14   // Khớp với sơ đồ Buzzer nối GPIO 14
+#define LED_PIN       12   
+#define BUZZER_PIN    14   
 
 // =====================================================
 // 2. WIFI VÀ MQTT
