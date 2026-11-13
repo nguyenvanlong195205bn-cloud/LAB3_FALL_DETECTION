@@ -1,6 +1,9 @@
 # LAB 3: XÂY DỰNG HỆ THỐNG PHÁT HIỆN TÉ NGÃ (FALL DETECTION) SỬ DỤNG ESP32, FREERTOS VÀ MQTT
 
 **Họ và tên:** Nguyễn Văn Long
+
+**Lớp:** KSKTVT
+
 **Đề tài:** Thiết kế Mạch phát hiện té ngã bằng phép đo gia tốc đột ngột và thay đổi góc nghiêng, tích hợp IoT Dashboard[cite: 1].
 
 ---
