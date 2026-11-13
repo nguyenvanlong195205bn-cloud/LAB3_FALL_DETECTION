@@ -34,12 +34,12 @@ Hệ thống được thiết kế nhằm giám sát và cảnh báo sự cố t
 | :--- | :--- | :--- | :--- |
 | **MPU6050** | VCC | 3V3 | Nguồn cấp |
 | | GND | GND | Mát chung |
-| | SDA | GPIO 21 | Giao tiếp I2C Data[cite: 3] |
-| | SCL | GPIO 22 | Giao tiếp I2C Clock[cite: 3] |
-| **Đèn LED** | Anode (+) | GPIO 12 | Qua điện trở hạn dòng 220Ω[cite: 1, 3] |
-| | Cathode (-) | GND | Mát[cite: 3] |
-| **Còi Buzzer** | Chân dương (+) | GPIO 14 | Tín hiệu cảnh báo[cite: 1, 3] |
-| | Chân âm (-) | GND | Mát[cite: 3] |
+| | SDA | GPIO 21 | Giao tiếp I2C Data |
+| | SCL | GPIO 22 | Giao tiếp I2C Clock |
+| **Đèn LED** | Anode (+) | GPIO 12 | Qua điện trở hạn dòng 220Ω |
+| | Cathode (-) | GND | Mát |
+| **Còi Buzzer** | Chân dương (+) | GPIO 14 | Tín hiệu cảnh báo] |
+| | Chân âm (-) | GND | Mát |
 
 ---
 
@@ -49,17 +49,17 @@ Hệ thống được thiết kế nhằm giám sát và cảnh báo sự cố t
   * Đọc liên tục giá trị gia tốc tổng ($a_{acc}$) và góc nghiêng (Roll, Pitch) từ cảm biến MPU6050.
   * Thuật toán nhận diện khi gia tốc vượt ngưỡng va chạm kết hợp góc nghiêng lệch quá giới hạn trong khoảng thời gian cho phép.
 * **Cảnh báo tại chỗ:** 
-  * Tự động bật sáng đèn LED và hú còi Buzzer khi xảy ra sự cố té ngã[cite: 1].
+  * Tự động bật sáng đèn LED và hú còi Buzzer khi xảy ra sự cố té ngã.
 * **Truyền thông dữ liệu IoT (MQTT):** 
-  * Gửi gói tin JSON chứa thông số gia tốc, góc nghiêng và trạng thái thiết bị lên MQTT Broker định kỳ[cite: 1].
-  * Nhận các lệnh điều khiển từ xa qua các Topic MQTT[cite: 1].
+  * Gửi gói tin JSON chứa thông số gia tốc, góc nghiêng và trạng thái thiết bị lên MQTT Broker định kỳ.
+  * Nhận các lệnh điều khiển từ xa qua các Topic MQTT
 * **Giao diện Web Dashboard:** 
-  * Hiển thị các giá trị dạng số (Digital Display) và trực quan hóa bằng **2 biểu đồ thời gian thực** (Biểu đồ gia tốc và Biểu đồ góc nghiêng)[cite: 1].
-  * Cung cấp các nút bấm (`button`) để chuyển đổi chế độ **AUTO / MANUAL**, bật/tắt thủ công LED/Buzzer và nút **RESET** trạng thái cảnh báo[cite: 1].
+  * Hiển thị các giá trị dạng số (Digital Display) và trực quan hóa bằng **2 biểu đồ thời gian thực** (Biểu đồ gia tốc và Biểu đồ góc nghiêng).
+  * Cung cấp các nút bấm (`button`) để chuyển đổi chế độ **AUTO / MANUAL**, bật/tắt thủ công LED/Buzzer và nút **RESET** trạng thái cảnh báo.
 
 ---
 
 ## 5. Kiến trúc FreeRTOS (Phân chia Task)
-* **`TaskReadData` (Core 1 - Ưu tiên 2):** Đọc dữ liệu từ MPU6050, tính toán gia tốc tổng, góc Roll/Pitch, chạy thuật toán phát hiện té ngã và đưa dữ liệu vào hàng đợi (`Queue`)[cite: 1].
-* **`TaskAlert` (Core 1 - Ưu tiên 2):** Xử lý sự kiện cảnh báo từ Queue để điều khiển trạng thái bật/tắt của LED (GPIO 12) và Buzzer (GPIO 14) theo chế độ tự động hoặc thủ công[cite: 1].
-* **`TaskTransmitData` (Core 0 - Ưu tiên 1):** Quản lý kết nối Wi-Fi, duy trì vòng lặp kết nối MQTT Broker, publish dữ liệu telemetry và subscribe nhận lệnh điều khiển từ Web[cite: 1].
+* **`TaskReadData` (Core 1 - Ưu tiên 2):** Đọc dữ liệu từ MPU6050, tính toán gia tốc tổng, góc Roll/Pitch, chạy thuật toán phát hiện té ngã và đưa dữ liệu vào hàng đợi (`Queue`).
+* **`TaskAlert` (Core 1 - Ưu tiên 2):** Xử lý sự kiện cảnh báo từ Queue để điều khiển trạng thái bật/tắt của LED (GPIO 12) và Buzzer (GPIO 14) theo chế độ tự động hoặc thủ công.
+* **`TaskTransmitData` (Core 0 - Ưu tiên 1):** Quản lý kết nối Wi-Fi, duy trì vòng lặp kết nối MQTT Broker, publish dữ liệu telemetry và subscribe nhận lệnh điều khiển từ Web.
